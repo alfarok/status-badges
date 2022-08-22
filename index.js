@@ -47,12 +47,18 @@ const main = async () => {
   }
   const findAll = findAllLinksInput === "true";
 
-  const updatedContent = await findAndPlaceBadges(
+  let updatedContent = await findAndPlaceBadges(
     octokit,
     content,
     config,
     findAll
   );
+  
+  // Work around for limited rendering support in various markdown flavors
+  updatedContent = updatedContent.replace(/:green_circle:/g, '🟢');
+  updatedContent = updatedContent.replace(/:yellow_circle:/g, '🟡');
+  updatedContent = updatedContent.replace(/:red_circle:/g, '🔴');
+  updatedContent = updatedContent.replace(/:grey_question:/g, '❔');
 
   const doPullRequest = core.getInput("pull-request") === "true";
 
