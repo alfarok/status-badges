@@ -117,7 +117,7 @@ export async function findAndPlaceBadges(
     regex = badgeRegex;
   }
 
-  const updatedContent = await replaceAsync(
+  let updatedContent = await replaceAsync(
     text,
     regex,
     async (match, baseUrl, owner, repo, tail, _emoji, badge) => {
@@ -162,6 +162,12 @@ export async function findAndPlaceBadges(
       return `${baseUrl}${tail ? tail : ""} ${emoji}`;
     }
   );
+
+  // Work around for limited rendering support in various markdown flavors
+  //updatedContent = updatedContent.replace(/:green_circle:/g, '🟢');
+  updatedContent = updatedContent.replace(/:yellow_circle:/g, '🟡');
+  updatedContent = updatedContent.replace(/:red_circle:/g, '🔴');
+  updatedContent = updatedContent.replace(/:grey_question:/g, '❔');
 
   return updatedContent;
 }
