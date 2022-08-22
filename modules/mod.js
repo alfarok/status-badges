@@ -164,7 +164,7 @@ export async function findAndPlaceBadges(
   );
 
   // Work around for limited rendering support in various markdown flavors
-  //updatedContent = updatedContent.replace(/:green_circle:/g, '🟢');
+  updatedContent = updatedContent.replace(/:green_circle:/g, '🟢');
   updatedContent = updatedContent.replace(/:yellow_circle:/g, '🟡');
   updatedContent = updatedContent.replace(/:red_circle:/g, '🔴');
   updatedContent = updatedContent.replace(/:grey_question:/g, '❔');
